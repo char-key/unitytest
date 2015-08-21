@@ -20,8 +20,8 @@ public class ButtonBehavior : MonoBehaviour {
 	void OnMouseUp(){
 		Debug.Log ("buttonAudio.isPlaying = " + buttonAudio.isPlaying);
 
-		if ( !buttonAudio.isPlaying ) {
-			buttonAudio.PlayOneShot (test);
-		}
+		buttonAudio.Stop();
+		buttonAudio.PlayOneShot (test);
+
 	}
 }
