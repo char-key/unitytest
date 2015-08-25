@@ -7,6 +7,8 @@ public class GameMasterBehavior : MonoBehaviour {
 	Text chosenText, lowerText, upperText;
 	Button guessButton;
 	Slider slider;
+	AudioSource audioSource;
+	AudioClip buttonSound;
 
 	MakeNumber gameLogic;
 
@@ -14,6 +16,13 @@ public class GameMasterBehavior : MonoBehaviour {
 	void Start () {
 
 		gameLogic = new MakeNumber ();
+
+		//Load the Sound
+		audioSource = GetComponent<AudioSource>();
+		buttonSound = Resources.Load ("twoTone2") as AudioClip;	
+		if( audioSource == null || buttonSound == null ){
+			Debug.LogError("GameMasterBehavior could not load audio");
+		}
 
 		//Find the Text
 		GameObject textGameObject = GameObject.Find ("ChosenNumberText");
@@ -95,9 +104,13 @@ public class GameMasterBehavior : MonoBehaviour {
 		Debug.Log ("result = " + result);
 
 		if (result == 0) {
-			//TODO: Win Screen
+			//Load Win Screen
 			Debug.Log("You Win!");
+			Application.LoadLevel("WinScene");
 		} else {
+			//Play the Sound
+			audioSource.PlayOneShot(buttonSound);
+
 			//Continue the game
 			int lowerBound, upperBound;
 
